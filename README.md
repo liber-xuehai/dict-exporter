@@ -6,9 +6,11 @@ Easily export data from the dictionary application and print to pdf, currently s
 
 **Step 1.** Fetch request `https://dict.yunzuoye.net/api/v1/pub/words/list?dictionaryType=ENG&updateTime=0` by yourself, then save the response as `data.json` file in the project root.
 
-**Step 2.** Run `yarn` to install dependencies. This only needs to be run the first time you launch or after upgrading the source code.
+**Step 2.** Run `node src/index.js`, then a HTML file would be created in the root and automatically open in your browser. Press `Ctrl + P` to invoke the built-in print dialog of the browser, then do whatever you want.
 
-**Step 3.** Run `yarn start` or `node src/index.js`, then a HTML file would be created in the root and automatically open in your browser. Press `Ctrl + P` to invoke the built-in print dialog of the browser, then do whatever you want.
+<!-- **Step 2.** Run `yarn` to install dependencies. This only needs to be run the first time you launch or after upgrading the source code.
+
+**Step 3.** Run `yarn start` or `node src/index.js`, then a HTML file would be created in the root and automatically open in your browser. Press `Ctrl + P` to invoke the built-in print dialog of the browser, then do whatever you want. -->
 
 ### Configuration
 
