@@ -1,0 +1,22 @@
+{
+	"compilerOptions": {
+		"baseUrl": "src",
+		"jsx": "preserve",
+		"strict": true,
+		"target": "es2020",
+		"module": "commonjs",
+		"declaration": true,
+		"composite": true,
+		"incremental": true,
+		"skipLibCheck": true,
+		"esModuleInterop": true,
+		"moduleResolution": "node",
+	},
+	"include": [
+		"src/**/*"
+	],
+	"exclude": [
+		"node_modules",
+		"**/node_modules"
+	],
+}

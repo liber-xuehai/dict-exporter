@@ -1,20 +1,9 @@
-const HTML = `
-	<!DOCTYPE html>
-	<html lang="zh-Hans">
-		<head>
-			<meta charset="utf-8">
-			<meta name="viewport" content="initial-scale=1, width=device-width">
-			<title>EXPORT</title>
-			<link rel="stylesheet" href="./style.css">
-			{{ header }}
-		</head>
-		<body>
-			{{ body }}
-		</body>
-	</html>
-`;
+import { HTML } from './template';
+import { Dictionary } from './type-utils';
+import { BasicElement, Config, Element, Explains } from './types';
+import { encodeExplain, decodeExplain } from './utils';
 
-function getDate(timestamp) {
+export function getDate(timestamp: string | number): string {
 	const date = new Date(+timestamp);
 	const y = date.getFullYear();
 	const m = date.getMonth() + 1;
@@ -22,44 +11,11 @@ function getDate(timestamp) {
 	return `${d}/${m}/${y}`;
 }
 
-function encodeExplain(explains) {
-	if (!(explains instanceof Array)) {
-		return explains;
-	}
-	const result = {};
-	for (let explain of explains) {
-		explain = explain.trim();
-		let matched = explain.match(/^([a-z]{1,4}\.)\ (.*)$/);
-		if (!matched) {
-			matched = [null, '', explain];
-		}
-		matched[2] = matched[2].split(/[;；]/).map(word => word.trim());
-		if (matched[1] in result) {
-			result[matched[1]].push.apply(result[matched[1]], matched[2]);
-		} else {
-			result[matched[1]] = matched[2];
-		}
-	}
-	return result;
-}
+export default function parse(data: any, cache: any, config: Config) {
+	const dataWords: Array<Element> = data?.words || [];
+	const cacheWords: Array<Element> = cache?.words || [];
 
-function decodeExplain(explains) {
-	if (explains instanceof Array) {
-		return explains;
-	}
-	const result = [];
-	for (const key in explains) {
-		result.push((key ? key + ' ' : '') + explains[key].join('；'));
-	}
-	return result;
-}
-
-function parse(data, cache, config) {
-	const dataWords = data?.words || [];
-	const cacheWords = cache?.words || [];
-	// const isEqual = (i, j) => (dataWords[i].words === cacheWords[j].words && dataWords[i].modifiedTime === cacheWords[j].modifiedTime);
-
-	const meanings = {};
+	const meanings: Dictionary<Explains> = {};
 	for (const element of cacheWords) {
 		if (element.explains) {
 			meanings[element.words] = encodeExplain(element.explains);
@@ -71,7 +27,7 @@ function parse(data, cache, config) {
 		}
 	}
 
-	const pool = {};
+	const pool: Dictionary<BasicElement> = {};
 	for (const element of dataWords.concat(cacheWords)) {
 		if (element.deleted) { continue; }
 		pool[JSON.stringify({ w: element.words, t: element.modifiedTime })] = {
@@ -81,15 +37,15 @@ function parse(data, cache, config) {
 		};
 	}
 
-	const result = [];
+	const result: Array<BasicElement> = [];
 	for (const key in pool) {
 		result.push(pool[key]);
 	}
-	result.sort((a, b) => (a.modifiedTime - b.modifiedTime));
+	result.sort((a: BasicElement, b: BasicElement) => (a.modifiedTime - b.modifiedTime));
 
-	const renderTable = (words) => {
+	const renderTable = (words: Array<BasicElement>): string => {
 		let counter = 0;
-		const res = [];
+		const res: Array<string> = [];
 		res.push('<table class="dict">');
 		// res.push('<thead><tr><th>#</th><th>Words</th><th>Explains</th></tr></thead>');
 		res.push('<tbody>');
@@ -105,8 +61,8 @@ function parse(data, cache, config) {
 		return res.join('\n');
 	}
 
-	const body = [];
-	for (let start = 0, end; start < result.length; start = end) {
+	const body: Array<string> = [];
+	for (let start = 0, end: number; start < result.length; start = end) {
 		const date = getDate(result[start].modifiedTime);
 		end = start;
 		while (end < result.length && getDate(result[end].modifiedTime) === date) {
@@ -128,5 +84,3 @@ function parse(data, cache, config) {
 		html,
 	};
 }
-
-module.exports = parse;

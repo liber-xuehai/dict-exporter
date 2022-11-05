@@ -1,18 +1,15 @@
-const fs = require('fs');
-const path = require('path');
-const YAML = require('yaml');
+import fs from 'fs';
+import path from 'path';
+import YAML from 'yaml';
 
-const parse = require('./parser');
+import parse from './parser';
+export { parse };
 
+export const projectRoot = path.join(__dirname, '../');
 
-const projectRoot = path.join(__dirname, '../');
-
-
-
-function run() {
-	// const css = fs.readFileSync(path.join(projectRoot, 'style.css')).toString();
-	const css = '';
-	const config = { css }
+export function run() {
+	const css = fs.readFileSync(path.join(projectRoot, 'src/style.css')).toString();
+	const config = { css };
 
 	const data = JSON.parse(fs.readFileSync(path.join(projectRoot, 'data.json')).toString() || '{}');
 	const cache = YAML.parse(fs.readFileSync(path.join(projectRoot, 'cache.yaml')).toString() || '{}');
@@ -25,9 +22,3 @@ function run() {
 if (require.main === module) {
 	run();
 }
-
-module.exports = {
-	run,
-	parse,
-	projectRoot,
-};
