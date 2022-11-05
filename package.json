@@ -1,0 +1,14 @@
+{
+  "name": "xuehai-dict-exporter",
+  "version": "1.0.0",
+  "main": "src/index.js",
+  "repository": "https://github.com/liber-xuehai/dict-exporter.git",
+  "author": "memset0 <memset0@outlook.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "node src/index.js"
+  },
+  "dependencies": {
+    "yaml": "^2.1.3"
+  }
+}
