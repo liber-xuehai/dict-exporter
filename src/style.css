@@ -4,9 +4,13 @@
 body {
   margin: auto;
   max-width: 720px;
-  font-size: 16px;
+  font-size: 17px;
   line-height: 24px;
   font-family: Georgia, 'Nimbus Roman No9 L', 'Songti SC', 'Noto Serif CJK SC', 'Source Han Serif SC', 'Source Han Serif CN', STSong, 'AR PL New Sung', 'AR PL SungtiL GB', NSimSun, SimSun, 'TW\-Sung', 'WenQuanYi Bitmap Song', 'AR PL UMing CN', 'AR PL UMing HK', 'AR PL UMing TW', 'AR PL UMing TW MBE', PMingLiU, MingLiU, serif;
+}
+table.dict th,
+table.dict td {
+  border: 1pt solid black;
 }
 table.dict {
   page-break-inside: auto;
@@ -14,23 +18,34 @@ table.dict {
   width: 100%;
   border-spacing: 0px;
 }
-table.dict,
-table.dict td {
-  border: 1px solid black;
-}
 table.dict tr {
   page-break-inside: avoid;
   page-break-after: auto;
   border-bottom: none;
 }
 table.dict td {
-  padding-left: 6px;
-  padding-right: 6px;
+  padding-left: 8px;
+  padding-right: 8px;
+  padding-top: 4px;
+  padding-bottom: 4px;
 }
 table.dict td:nth-child(1) {
-  width: 32px;
+  width: 36px;
   text-align: center;
 }
 table.dict td:nth-child(2) {
-  width: 160px;
+  width: 180px;
+}
+@page {
+	size: A4;
+	margin-left: 72px;
+	margin-right: 72px;
+	margin-top: 24px;
+	margin-bottom: 24px;
+}
+@media print {
+  table.dict th,
+  table.dict td {
+    border-width: 1pt !important;
+  }
 }
